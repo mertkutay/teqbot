@@ -6,7 +6,7 @@ import redis
 from providers.youtube import YoutubeVideo
 from teqbot import settings
 
-CLIENT = redis.StrictRedis(host=settings.REDIS_HOST, port=6379, db=1)
+CLIENT = redis.from_url(settings.REDIS_URL, db=1)
 QUEUE = "teqbot"
 
 

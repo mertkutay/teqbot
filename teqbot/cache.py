@@ -2,7 +2,7 @@ import redis
 
 from teqbot import settings
 
-CLIENT = redis.StrictRedis(host=settings.REDIS_HOST, port=6379, db=0)
+CLIENT = redis.from_url(settings.REDIS_URL, db=0)
 QUEUE = "teqbot"
 
 
