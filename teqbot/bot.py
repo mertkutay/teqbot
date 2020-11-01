@@ -71,6 +71,7 @@ class TeqBot:
         buffer_size = 1920
         process = (
             ffmpeg.input(video.file_path)
+            .filter("loudnorm", i=-24)
             .output("pipe:", format="s16le", acodec="pcm_s16le", ac=2, ar="48k")
             .run_async(pipe_stdout=True)
         )
