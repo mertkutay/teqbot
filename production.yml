@@ -8,7 +8,6 @@ services:
     image: teqbot
     container_name: teqbot
     depends_on:
-      - murmur
       - redis
     env_file:
       - ./.env
