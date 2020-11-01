@@ -1,4 +1,6 @@
 import audioop
+import base64
+import io
 import time
 from threading import Event, Lock
 
@@ -56,6 +58,16 @@ class TeqBot:
                 file.unlink()
 
     def play(self, video):
+        message = f"Playing:<br>{video.title}"
+        thumbnail = video.thumbnail
+        if thumbnail:
+            buffer = io.BytesIO()
+            thumbnail.save(buffer, format="JPEG")
+            thumbnail_str = base64.b64encode(buffer.getvalue()).decode()
+            message += f'<br><img - src="data:image/PNG;base64,{thumbnail_str}"/>'
+
+        self.send_message(message)
+
         buffer_size = 1920
         process = (
             ffmpeg.input(video.file_path)

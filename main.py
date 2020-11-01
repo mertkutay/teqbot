@@ -28,7 +28,6 @@ def main():
                 continue
 
         current_download.join()
-        bot.send_message(f"Playing:<br>{current_video.title}")
         play_thread = Thread(target=bot.play, args=[current_video], daemon=True)
         play_thread.start()
 

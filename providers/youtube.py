@@ -3,6 +3,7 @@ import time
 from functools import wraps
 
 import youtube_dlc
+from PIL import Image
 
 from teqbot import settings
 
@@ -63,6 +64,17 @@ class YoutubeVideo:
     @property
     def downloaded(self):
         return self.file_path.exists()
+
+    @property
+    def thumbnail(self):
+        thumbnail_path = settings.DOWNLOAD_FOLDER / f"{self.video_id}.jpg"
+        if not thumbnail_path.exists():
+            thumbnail_path = settings.DOWNLOAD_FOLDER / f"{self.video_id}.webp"
+            if not thumbnail_path.exists():
+                return None
+        img = Image.open(thumbnail_path)
+        img.thumbnail((100, 100), Image.ANTIALIAS)
+        return img
 
     @retry
     def download(self):
