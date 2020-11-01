@@ -92,7 +92,6 @@ class TeqBot:
             self.send_message(f"Audio exceeds max duration limit:<br>{video.title}")
 
         with self.lock:
-            self.send_message(f"Added to Queue:<br>{video.title}")
             queue.push(video)
             self.video_in_queue.set()
 
