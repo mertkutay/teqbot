@@ -24,10 +24,15 @@ class TeqBot:
         self.mumble.start()
         self.mumble.is_ready()
 
-        channel = cache.get_user_setting("channel")
-        if channel:
-            self.mumble.channels.find_by_name(self.channel).move_in()
-        self.volume = cache.get_user_setting("volume", default=50)
+        self.channel = cache.get_user_setting("channel")
+        if self.channel:
+            try:
+                self.mumble.channels.find_by_name(self.channel).move_in()
+            except pymumble.errors.UnknownChannelError:
+                self.send_message("Channel `{self.channel}` not found")
+                self.channel = None
+                cache.set_user_setting("channel", None)
+        self.volume = cache.get_user_setting("volume", int, default=50)
         self.mumble.set_bandwidth(200000)
         self.lock = Lock()
         self.interrupt_event = Event()
