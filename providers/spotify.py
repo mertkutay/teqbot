@@ -2,7 +2,7 @@ import re
 
 import requests
 
-from teqbot import settings, cache
+from teqbot import cache, settings
 
 
 class SpotifyClient:

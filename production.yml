@@ -4,14 +4,12 @@ services:
   teqbot:
     build:
       context: .
-      dockerfile: compose/local/Dockerfile
+      dockerfile: compose/production/Dockerfile
     image: teqbot
     container_name: teqbot
     depends_on:
       - murmur
       - redis
-    volumes:
-      - .:/app:z
     env_file:
       - ./.env
     command: /start

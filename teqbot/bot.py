@@ -24,10 +24,10 @@ class TeqBot:
         self.mumble.start()
         self.mumble.is_ready()
 
-        channel = cache.get(f"channel_{settings.MUMBLE_USER}")
+        channel = cache.get_user_setting("channel")
         if channel:
             self.mumble.channels.find_by_name(self.channel).move_in()
-        self.volume = cache.get(f"volume_{settings.MUMBLE_USER}") or 50
+        self.volume = cache.get_user_setting("volume", default=50)
         self.mumble.set_bandwidth(200000)
         self.lock = Lock()
         self.interrupt_event = Event()
@@ -71,6 +71,9 @@ class TeqBot:
             self.mumble.sound_output.add_sound(scaled)
 
     def enqueue(self, video):
+        if video.duration > settings.MAX_AUDIO_DURATION:
+            self.send_message(f"Audio exceeds max duration limit:<br>{video.title}")
+
         with self.lock:
             self.send_message(f"Added to Queue:<br>{video.title}")
             queue.push(video)
@@ -95,6 +98,7 @@ class TeqBot:
             else:
                 self.send_message("Invalid volume")
                 return
+        cache.set_user_setting("volume", self.volume)
         self.send_message(f"Volume: {self.volume}%")
 
     def search(self, query):

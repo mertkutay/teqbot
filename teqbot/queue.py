@@ -1,5 +1,6 @@
 import json
 import random
+
 import redis
 
 from providers.youtube import YoutubeVideo

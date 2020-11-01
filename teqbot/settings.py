@@ -7,8 +7,19 @@ ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
 env = Env()
 env.read_env(ROOT_DIR / ".env")
 
-VALID_COMMANDS = ["vol", "search", "url", "playlist", "skip", "stop", "cancel", "shuffle", "queue"]
+VALID_COMMANDS = [
+    "vol",
+    "search",
+    "url",
+    "playlist",
+    "skip",
+    "stop",
+    "cancel",
+    "shuffle",
+    "queue",
+]
 MAX_FILES = 20
+MAX_AUDIO_DURATION = 15 * 60
 
 MUMBLE_HOST = env("MUMBLE_HOST")
 MUMBLE_PORT = env.int("MUMBLE_PORT")

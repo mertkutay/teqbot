@@ -1,9 +1,6 @@
 pymumble==1.4
 redis==3.5.3
 environs==8.0.0
-google-api-python-client==1.12.5
 requests==2.24.0
 youtube-dlc==2020.10.31
 ffmpeg-python==0.2.0
-watchdog==0.10.3
-argh==0.26.2

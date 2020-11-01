@@ -11,12 +11,19 @@ RUN apt-get update \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements* /
-RUN pip install --use-feature=2020-resolver -r /requirements-dev.txt
+RUN addgroup --system teqbot \
+    && adduser --system --ingroup teqbot teqbot
 
-COPY ./start /start
+COPY ./requirements* /
+RUN pip install --use-feature=2020-resolver -r /requirements.txt
+
+COPY --chown=teqbot:teqbot ./compose/production/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
+
+COPY --chown=teqbot:teqbot . /app
+
+USER teqbot
 
 WORKDIR /app
 
